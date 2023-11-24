@@ -1,0 +1,48 @@
+package com.employee.service.impl;
+
+import java.util.Optional;
+
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+
+import com.employee.feignclients.AddessFeignClient;
+import com.employee.model.Employee;
+import com.employee.repository.EmployeeRepo;
+import com.employee.response.AddressResponse;
+import com.employee.response.EmployeeResponse;
+import com.employee.service.EmployeeService;
+
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+
+@Service
+public class EmployeeServiceImpl implements EmployeeService {
+	
+	@Autowired
+	private EmployeeRepo employeeRepo;
+
+	@Autowired
+    private ModelMapper modelMapper;
+	
+	@Autowired
+	private AddessFeignClient addessFeignClient;
+	
+	private static final String SERVICE_NAME="employee-service";
+	
+	@Override
+	@CircuitBreaker(name=SERVICE_NAME,fallbackMethod = "fallbackMethodForAddress")
+	public EmployeeResponse getEmployeeById(int id) {
+		Optional<Employee> employee = this.employeeRepo.findById(id);
+		EmployeeResponse mapEmployee = modelMapper.map(employee,EmployeeResponse.class);
+		ResponseEntity<AddressResponse> addressResponse = this.addessFeignClient.getAddressByEmployeeId(id);
+		mapEmployee.setAddressResponse(addressResponse.getBody());
+		return mapEmployee;
+	}
+	
+	public String fallbackMethodForAddress(Exception e) {
+		System.out.println("fallback method for address service is called");
+		return "please try after some time currently service is dwon";
+	}
+
+}

@@ -1,0 +1,9 @@
+spirng.datasource.url=jdbc:mysql://localhost:3306/circuitbreaker
+spring.datasource.username=root
+spring.datasource.password=root
+spring.jpa.properties.hibernate.dialect= org.hibernate.dialect.MySQL8Dialect
+spring.jpa.driverClassName= com.mysql.cj.jdbc.Driver 
+
+spring.application.name=employee-service
+
+server.port=9090

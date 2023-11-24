@@ -1,0 +1,7 @@
+spirng.datasource.url=jdbc:mysql://localhost:3306/circuitbreaker
+spring.datasource.username=root
+spring.datasource.password=root
+
+spring.application.name=employee-service
+
+server.port=9090

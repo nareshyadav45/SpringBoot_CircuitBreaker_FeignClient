@@ -1,0 +1,5 @@
+package com.address.restcontroller;
+
+public class AddressRestController {
+
+}

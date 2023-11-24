@@ -1,0 +1,5 @@
+package com.employee.rest;
+
+public class EmployeeRest {
+
+}

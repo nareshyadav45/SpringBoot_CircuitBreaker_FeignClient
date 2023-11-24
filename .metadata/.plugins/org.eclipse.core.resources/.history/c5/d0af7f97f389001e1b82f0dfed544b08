@@ -1,0 +1,16 @@
+package com.employee.feignclients;
+
+import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import com.employee.response.AddressResponse;
+
+@FeignClient(name="address-service",url="http://localhost:/1010/addressByEmpId")
+public interface AddessFeignClient {
+	
+	@GetMapping("/addressByEmpId")
+	public ResponseEntity<AddressResponse> fetchAdreesByEmpId(@RequestParam int eid);
+
+}

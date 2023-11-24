@@ -1,0 +1,5 @@
+package com.address.response;
+
+public class AddressResponse {
+
+}

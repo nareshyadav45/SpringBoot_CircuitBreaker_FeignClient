@@ -1,0 +1,28 @@
+package com.address.service.impl;
+
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.address.model.Address;
+import com.address.repository.AddressRepository;
+import com.address.response.AddressResponse;
+import com.address.service.AddressService;
+
+@Service
+public class AdressServiceImpl implements AddressService{
+	
+	@Autowired
+	private AddressRepository addressRepository;
+	
+	@Autowired
+	private ModelMapper modelMapper;
+
+	@Override
+	public AddressResponse findAdressByEmployeeId(int id) {
+		Address addressByEmployeeId = this.addressRepository.getAddressByEmployeeId(id);
+		AddressResponse mapAddressResponse = this.modelMapper.map(addressByEmployeeId, AddressResponse.class);
+		return mapAddressResponse;
+	}
+
+}
